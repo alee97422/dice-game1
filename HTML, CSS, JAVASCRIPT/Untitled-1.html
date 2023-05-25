@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--  this is the simple webpage version of this little game -->
+  <title>Sex Dice Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color-scheme: light dark;
+      background-color: #333333;
+
+    }
+
+    .container { 
+
+      background-image: linear-gradient(180deg, #8f71ff, #8bffff);
+      max-width: 500px;
+      height: 500px; 
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      color: #555;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sex Dice Game</h1>
+    <label for="numPlayers">Number of Players:</label>
+    <input type="number" id="numPlayers" min="2" value="2">
+    <label for="playerNames">Player Names (separated by commas):</label>
+    <input type="text" id="playerNames">
+    <button onclick="rollDice()">Roll Dice</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    var bodyParts = ["lips", "genitals", "thigh", "neck", "chest", "foot"];
+    var acts = ["suck", "lick", "nibble", "caress", "kiss", "massage"];
+
+    function rollDice() {
+      var numPlayersInput = document.getElementById("numPlayers");
+      var playerNamesInput = document.getElementById("playerNames");
+
+      var numPlayers = parseInt(numPlayersInput.value);
+      var playerNames = playerNamesInput.value.split(",").map(name => name.trim());
+
+      if (numPlayers < 2) {
+        alert("Minimum 2 players required.");
+        return;
+      }
+
+      if (playerNames.length < numPlayers) {
+        alert("Please enter names for all players.");
+        return;
+      }
+
+      var randomDiceRollerIndex = Math.floor(Math.random() * numPlayers);
+      var randomPlayerIndex = Math.floor(Math.random() * numPlayers);
+
+      while (randomPlayerIndex === randomDiceRollerIndex) {
+        randomPlayerIndex = Math.floor(Math.random() * numPlayers);
+      }
+
+      var diceRoller = playerNames[randomDiceRollerIndex];
+      var player = playerNames[randomPlayerIndex];
+      var randomBodyPart = getRandomElement(bodyParts);
+      var randomAct = getRandomElement(acts);
+
+      var result = "Dice Roller: " + diceRoller + "<br>";
+      result += "Player: " + player + "<br>";
+      result += "Action: " + randomAct + "<br>";
+      result += "Body Part: " + randomBodyPart;
+
+      document.getElementById("result").innerHTML = result;
+    }
+
+    function getRandomElement(array) {
+      var randomIndex = Math.floor(Math.random() * array.length);
+      return array[randomIndex];
+    }
+  </script>
+</body>
+</html>
